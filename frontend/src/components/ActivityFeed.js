@@ -122,7 +122,7 @@ function ActivityFeed({ tenantId }) {
           })
           .catch(err => console.error('Error polling for updates:', err));
       }
-    }, 5000); // Poll every 5 seconds
+    }, 5000); 
 
     return () => {
       clearInterval(pollInterval);
@@ -198,10 +198,8 @@ function ActivityFeed({ tenantId }) {
       setOptimisticActivities(prev => prev.filter(a => a._id !== tempId));
       setActivities(prev => prev.filter(a => a._id !== tempId));
       
-      // Show error to user
       setError(`Failed to create activity: ${error.message}. Please try again.`);
       
-      // Clear error after 5 seconds
       setTimeout(() => setError(null), 5000);
     }
   }, []);
@@ -211,7 +209,7 @@ function ActivityFeed({ tenantId }) {
     setFilter(newFilter);
   }, []);
 
-  // Combine activities with optimistic ones (filter out failed ones)
+  // Combine activities with optimistic ones
   const displayActivities = activities.filter(
     a => !failedOptimisticIds.has(a._id)
   );
